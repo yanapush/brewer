@@ -1,0 +1,236 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    font-size: 3em;
+    display:inline-block;
+}
+
+h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    font-size: 1.5em;
+    display:inline-block;
+}
+
+p, label {
+    font-family: 'Montserrat', sans-serif;
+    display:inline-block;
+}
+
+input {
+    font-family: 'Montserrat', sans-serif;
+}
+
+button {
+    border: none;
+    border-radius: 5px;
+    -webkit-box-shadow: -2px 5px 15px 5px rgba(0,0,0,0.13);
+    box-shadow: -2px 5px 15px 5px rgba(0,0,0,0.13);
+    padding: 15px 80px;
+    font-size: 1.5em;
+    transition: all  0.6s ease;
+}
+
+button:hover {
+    transform: scale(1.01);
+}
+
+button:active {
+    transform: scale(0.99);
+}
+
+.main-button {
+    background-color: black;
+    color: white;
+}
+
+.secondary-button {
+    color: black;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
+}
+
+.container {
+    width: 100%;
+    margin: auto;
+}
+
+.cards-container {
+    display: flex;
+    padding: 3rem;
+    overflow-x: auto;
+    position: relative;
+}
+
+.cards-container::-webkit-scrollbar {
+     display: none;
+ }
+
+.card {
+    flex: 1 0 250px;
+    box-shadow: 0 1px 1rem -10px #000;
+    background: #fff;
+    margin: 1rem;
+    overflow: hidden;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 250ms ease-in-out;
+}
+
+img {
+    width: 100%;
+}
+
+.card:hover {
+     box-shadow: 0 4px 1rem -4px #000;
+     transform: translateY(-3px);
+ }
+
+.card-content {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+@media screen and (max-width: 625px) {
+    .container {
+        width: 100%
+    }
+
+    .cards-container {
+        padding: .5rem;
+    }
+
+    .card {
+        margin: .5rem;
+    }
+}
+
+#root {
+    position: relative;
+
+    height: 100vh;
+}
+.page-container {
+    /*position: relative;*/
+    padding: 40px;
+}
+
+
+.create-button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 999;
+}
+
+.hirizontal-cards-container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.recipe {
+    width: 80%;
+    box-shadow: 0 1px 1rem -10px #000;
+    background: #fff;
+    margin: 1rem;
+    overflow: hidden;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 250ms ease-in-out;
+}
+
+.recipe:hover {
+    box-shadow: 0 4px 1rem -4px #000;
+    transform: translateY(-3px);
+}
+
+.recipes-container__header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.selector-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.selector__item {
+    margin: 30px;
+    cursor: pointer;
+    transition: all 250ms ease-in-out;
+}
+
+.selector__item:hover {
+    transform: scale(1.05);
+}
+.selector__item:active {
+    transform: scale(0.95);
+}
+
+.widget {
+    position: absolute;
+    height: 80%;
+    width: 50%;
+    background-color: white;
+    box-shadow: 0 4px 1rem -4px #000;
+
+    /*background-color: yellow;*/
+    top: 10%;
+    left: 25%;
+    z-index: 998;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper {
+    /*background-color: cornflowerblue;*/
+}
+
+.recipe-info {
+    box-shadow: 0 4px 1rem -4px #000;
+    border-radius: 5px;
+    width: 40%;
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.steps-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.characteristics-container {
+
+}
+
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.recipe-icon {
+    width: 35px;
+    height: 35px;
+}
