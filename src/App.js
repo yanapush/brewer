@@ -4,21 +4,21 @@ import {
     Routes,
     Route,
 } from "react-router-dom";
-import './style/App.css';
 import Main from "./pages/Main";
 import Login from "./pages/Login";
 import {useDispatch} from "react-redux";
-import {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {fetchCoffee} from "./asyncActions/coffee";
 import {Navbar} from "./containers/Navbar";
 import {fetchUser} from "./asyncActions/users";
 import Coffee from "./pages/Coffee";
+import Brew from "./pages/Brew";
 
 function App() {
     const dispatch = useDispatch();
 
        useEffect(() => {
-           dispatch(fetchCoffee)
+           dispatch(fetchCoffee());
            dispatch(fetchUser("yanapush"))
        }, []);
 
@@ -26,8 +26,9 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route path="/main" element={<div className="page-container"> <Navbar/> <Main/> </div>}/>
+                <Route path="/brew" element={<div className="page-container"> <Navbar/> <Brew/> </div>}/>
                 <Route path="/coffee/:id" element={<div className="page-container"> <Navbar/> <Coffee/> </div>}/>
-                <Route path="/" element={<Login/>}/>
+                <Route path="/login" element={<Login/>}/>
             </Routes>
         </BrowserRouter>
     );

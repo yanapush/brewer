@@ -4,8 +4,8 @@ import {useSelector} from "react-redux";
 
 export const VerticalCardContainer = () => {
     const coffee = useSelector(state => state.coffeeReducer)
-
-    return coffee.loading ? (<div>hi</div>) : (<div className="cards-container">
+    console.log(coffee);
+    return coffee.loading ? (<div><img src="../photos/loading.gif"/> </div>) : (<div className="cards-container">
         {
             coffee.coffee.map((coffee) => {
                 return (

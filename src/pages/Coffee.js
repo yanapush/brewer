@@ -1,6 +1,6 @@
 import {useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {HorizontalCardContainer} from "../containers/HorizontalCardContainer";
 import {fetchRecipes} from "../asyncActions/recipes";
 
@@ -12,30 +12,24 @@ export default function Coffee() {
     const userReducer = useSelector(state => state.userReducer);
 
     useEffect(() => {
-        fetch();
-    }, []);
+        fetch().then(console.log("reloaded coffee page"));
+    }, [userReducer, coffeeReducer]);
 
     const fetch = async () => {
-        setActiveRecipes(prev => {
-            return {...prev, isFetching: true}
-        });
+        setActiveRecipes(prev =>  ({...prev, isFetching: true}));
         const response = await fetchRecipes(coffee_id);
-        setActiveRecipes({
-            recipes: response.map(recipe => {
-                if (recipe.author.username === userReducer.username) {
-                    return {...recipe, isActive : true};
-                } else {
-                    return {...recipe, isActive : false};
-                }
-            }),
+        console.log(response)
+        setActiveRecipes({recipes : getCurrentRecipes(response),
             isFetching: false,
             isLoaded: true
-        })
+        });
     };
 
     const getCurrentRecipes = (recipes) => {
+        console.log(recipes);
         return recipes.map(recipe => {
             if (recipe.author.username === userReducer.username) {
+                console.log(recipe)
                 return {...recipe, isActive: true};
             } else {
                 return {...recipe, isActive: false};
@@ -45,7 +39,7 @@ export default function Coffee() {
 
     const getDefaultRecipes = (recipes) => {
         return recipes.map(recipe => {
-            if (recipe.author.username === "yanapush") {
+            if (recipe.author.username === userReducer.username) {
                 return {...recipe, isActive: true};
             } else {
                 return {...recipe, isActive: false};
@@ -63,36 +57,41 @@ export default function Coffee() {
         });
     }
 
-    return !coffeeReducer.loading && !userReducer.loading && activeRecipes.isLoaded && (
+    const [activeSelector, setActive] = useState("yours");
+
+    console.log(!coffeeReducer.loading);
+    console.log(!userReducer.loading);
+    console.log(activeRecipes.isLoaded);
+    return (coffeeReducer.loading || userReducer.loading || !activeRecipes.isLoaded) ? <img className="loading-gif" src="../photos/loading.gif"/> : (
         <div>
-            <h1>{coffeeReducer.coffee.find(item => item.id === coffee_id).coffee_name}</h1>
+            <h1>{coffeeReducer.coffee.find(item => item.id == coffee_id).coffee_name}</h1>
             <div className="selector-container">
 
-                <div className="selector__item" onClick={() => setActiveRecipes(prev => {
+                <div className={activeSelector === "yours" ? "selector__item active-selector" : "selector__item"} name={"yours"} onClick={(e) => {setActive("yours"); setActiveRecipes(prev => {
                     return activeRecipes.recipes !== undefined ?
                         {
                             ...prev,
                             recipes: getCurrentRecipes(prev.recipes)
                         } : prev
-                })}>
+                })}}>
                     <p>yours</p>
                 </div>
 
-                <div className="selector__item" onClick={() => setActiveRecipes(prev => {
+                <div className={activeSelector === "recommended" ? "selector__item active-selector" : "selector__item"} name={"recommended"} onClick={() => { setActive("recommended"); setActiveRecipes(prev => {
                     return activeRecipes.recipes !== undefined ?
                         {
                             ...prev,
                             recipes: getDefaultRecipes(prev.recipes)
                         } : prev
-                })}><p>recommended</p></div>
+                })}}><p>recommended</p></div>
 
-                <div className="selector__item" onClick={() => setActiveRecipes(prev => {
+                <div className={activeSelector === "community" ? "selector__item active-selector" : "selector__item"} name={"community"} onClick={() => { setActive("community");setActiveRecipes(prev => {
                     return activeRecipes.recipes !== undefined ?
                         {
                             ...prev,
                             recipes: getCommunityRecipes(prev.recipes)
                         } : prev
-                })}><p>community</p></div>
+                })}}><p>community</p></div>
             </div>
             {(activeRecipes.recipes !== undefined && activeRecipes.recipes.filter(recipe => recipe.isActive).length !== 0) ?
                 <HorizontalCardContainer loading={!activeRecipes.isLoaded} recipes={activeRecipes.recipes}/> :

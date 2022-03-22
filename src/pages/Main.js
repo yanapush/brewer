@@ -1,13 +1,22 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {VerticalCardContainer} from "../containers/VerticalCardsContainer";
 import {HorizontalCardContainer} from "../containers/HorizontalCardContainer";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import "../style/main.css"
+import {fetchUser} from "../asyncActions/users";
+import {fetchCoffee} from "../asyncActions/coffee";
 
 export default function Main() {
+    const dispatch = useDispatch();
     const [recipesChange, setRecipesChange] = React.useState(false);
     const user = useSelector(state =>  state.userReducer)
-    return !user.loading &&
-        (<div>
+
+    useEffect(() => {
+        dispatch(fetchUser("yanapush"));
+        dispatch(fetchCoffee());
+    }, []);
+    return user.loading ? <img className="loading-gif" src="../photos/loading.gif"/> :
+        (<>
             <div className="container">
                 <h1>
                     Coffee
@@ -19,12 +28,12 @@ export default function Main() {
                     <h1>
                         Your recipes
                     </h1>
-                    <button onClick={() => {
+                    <button className="img-button" onClick={() => {
                         setRecipesChange(state => !state);
-                    }}> Change </button>
+                    }}> <img className="icon" src="../photos/change.png"/> </button>
                 </div>
                 <HorizontalCardContainer loading={user.loading} recipes={user.recipes} changeState={recipesChange}/>
             </div>
-        </div>
+        </>
     );
 }
